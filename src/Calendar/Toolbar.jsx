@@ -61,7 +61,7 @@ const StyledMenu = styled.div`
    & .react-select-menu {
       animation: ${animation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       background-color: rgb(255, 255, 255);
-      border-radius: 10px;
+      border-radius: 12px;
       border: none;
       box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
       margin: 0;
@@ -91,7 +91,7 @@ const defaultOptions = {
          ...styles,
          backgroundColor: '#ffffff',
          border: '1px solid #e2e4ea',
-         borderRadius: 10,
+         borderRadius: 12,
          boxShadow: 'none',
          color: 'rgb(37, 42, 59)',
          cursor: 'pointer',
@@ -142,7 +142,7 @@ const defaultOptions = {
             : isFocused
             ? 'rgba(82, 85, 241, 0.1)'
             : '#ffffff',
-         borderRadius: 8,
+         borderRadius: 10,
          color: isSelected ? '#ffffff' : isFocused ? '#252a3b' : '#252a3b',
          cursor: 'pointer',
          fontSize: 16,
@@ -186,6 +186,7 @@ class ToolBar extends ReactBigCalendarToolbar {
    render() {
       const { navigate } = this;
       const { view, label, onView } = this.props;
+      console.log(this.props);
       const options = [
          {
             value: 'month',

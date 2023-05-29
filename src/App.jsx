@@ -14,14 +14,25 @@ const StyledElement = styled.div`
    }
 `;
 const App = () => {
+   const events = [
+      {
+         title: 'Meeting',
+         start: new Date(),
+         end: new Date(),
+         allDay: false,
+         //   resource?: any,
+      },
+   ];
    return (
       <StyledElement>
-         <h1 style={{ textAlign: 'center', margin: 0 }}>Calendar Component</h1>
+         <h2 style={{ textAlign: 'center', margin: 0 }}>
+            Calendar component with react-big-calendar
+         </h2>
          <h4 style={{ textAlign: 'center', margin: '15px 0' }}>
             <a href='https://github.com/hayitmurod707/calendar'>Github</a>
          </h4>
          <div className='content'>
-            <Calendar />
+            <Calendar events={events} />
          </div>
       </StyledElement>
    );
