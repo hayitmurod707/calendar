@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Calendar from './Calendar';
 const StyledElement = styled.div`
@@ -10,29 +11,66 @@ const StyledElement = styled.div`
    & .content {
       height: 600px;
       max-width: 100%;
-      width: 800px;
+      width: 900px;
    }
 `;
 const App = () => {
+   const [date, setDate] = useState(new Date());
    const events = [
       {
          title: 'Meeting',
-         start: new Date(),
-         end: new Date(),
+         start: new Date(2023, 4, 30, 8, 0, 0),
+         end: new Date(2023, 4, 30, 11, 0, 0),
          allDay: false,
-         //   resource?: any,
+         status: 'warning',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 30, 9, 0, 0),
+         end: new Date(2023, 4, 30, 10, 0, 0),
+         allDay: false,
+         status: 'success',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 30, 10, 0, 0),
+         end: new Date(2023, 4, 30, 12, 0, 0),
+         allDay: false,
+         status: 'error',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 30, 7, 0, 0),
+         end: new Date(2023, 4, 30, 8, 0, 0),
+         allDay: false,
+      },
+      {
+         title: 'New meeting nfoerfer',
+         start: new Date(2023, 4, 30, 10, 0, 0),
+         end: new Date(2023, 4, 30, 11, 0, 0),
+         allDay: false,
+      },
+      {
+         title: 'New meeting nfoerfer',
+         start: new Date(2023, 4, 30, 12, 0, 0),
+         end: new Date(2023, 4, 30, 13, 0, 0),
+         allDay: false,
+      },
+      {
+         title: 'New meeting nfoerfer',
+         start: new Date(2023, 4, 30, 13, 0, 0),
+         end: new Date(2023, 4, 30, 14, 0, 0),
+         allDay: false,
       },
    ];
    return (
       <StyledElement>
-         <h2 style={{ textAlign: 'center', margin: 0 }}>
-            Calendar component with react-big-calendar
-         </h2>
+         <h2 style={{ textAlign: 'center', margin: 0 }}>Calendar</h2>
          <h4 style={{ textAlign: 'center', margin: '15px 0' }}>
             <a href='https://github.com/hayitmurod707/calendar'>Github</a>
          </h4>
          <div className='content'>
-            <Calendar events={events} />
+            <Calendar date={date} onNavigate={setDate} events={events} />
          </div>
       </StyledElement>
    );

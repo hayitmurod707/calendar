@@ -3,5 +3,6 @@
    "editor.fontSize": 15,
    "editor.tabSize": 3,
    "reactSnippets.settings.importReactOnTop": false,
-   "reactSnippets.settings.prettierEnabled": true
+   "reactSnippets.settings.prettierEnabled": true,
+   "cSpell.words": ["timeslot"]
 }

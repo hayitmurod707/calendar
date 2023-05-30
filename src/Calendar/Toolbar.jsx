@@ -1,7 +1,34 @@
+import { func, string } from 'prop-types';
 import ReactBigCalendarToolbar from 'react-big-calendar/lib/Toolbar';
 import Select, { components } from 'react-select';
 import styled, { keyframes } from 'styled-components';
-const StyledElement = styled.div`
+const animation = keyframes`
+	0% {
+		opacity: 0.1;
+		transform: scale(0.6);
+	}
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+`;
+export const StyledMenu = styled.div`
+   & .react-select-menu {
+      animation: ${animation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background-color: #ffffff;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+      margin: 0;
+      min-width: 100%;
+      overflow: hidden;
+      padding: 0;
+      right: 0;
+      transform-origin: top;
+      width: initial;
+   }
+`;
+export const StyledToolBar = styled.div`
    align-items: center;
    display: flex;
    justify-content: space-between;
@@ -23,8 +50,8 @@ const StyledElement = styled.div`
          height: 40px;
          justify-content: center;
          &:hover {
-            background-color: #5254f1;
-            border: 1px solid #5254f1;
+            background-color: #0071f2;
+            border: 1px solid #0071f2;
             color: #ffffff;
             & svg {
                fill: #ffffff;
@@ -47,32 +74,6 @@ const StyledElement = styled.div`
       margin: 0 10px;
    }
 `;
-const animation = keyframes`
-	0% {
-		opacity: 0.1;
-		transform: scale(0.6);
-	}
-	100% {
-		opacity: 1;
-		transform: scale(1);
-	}
-`;
-const StyledMenu = styled.div`
-   & .react-select-menu {
-      animation: ${animation} 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      background-color: rgb(255, 255, 255);
-      border-radius: 12px;
-      border: none;
-      box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
-      margin: 0;
-      min-width: 100%;
-      overflow: hidden;
-      padding: 0;
-      right: 0;
-      transform-origin: top;
-      width: initial;
-   }
-`;
 const Menu = props => (
    <StyledMenu>
       <components.Menu {...props} className='react-select-menu'>
@@ -80,7 +81,7 @@ const Menu = props => (
       </components.Menu>
    </StyledMenu>
 );
-const defaultOptions = {
+const selectConfig = {
    components: { IndicatorSeparator: () => null, Menu },
    isClearable: false,
    isMulti: false,
@@ -131,14 +132,14 @@ const defaultOptions = {
             backgroundColor: 'transparent',
          },
          '::-webkit-scrollbar-thumb': {
-            backgroundColor: '#5254f1',
+            backgroundColor: '#0071f2',
             borderRadius: 3,
          },
       }),
       option: (styles, { isSelected, isFocused }) => ({
          ...styles,
          backgroundColor: isSelected
-            ? '#5254f1'
+            ? '#0071f2'
             : isFocused
             ? 'rgba(82, 85, 241, 0.1)'
             : '#ffffff',
@@ -154,14 +155,14 @@ const defaultOptions = {
          whiteSpace: 'nowrap',
          width: '100%',
          ':hover': {
-            backgroundColor: isSelected ? '#5254f1' : 'rgba(82, 85, 241, 0.1)',
+            backgroundColor: isSelected ? '#0071f2' : 'rgba(82, 85, 241, 0.1)',
          },
       }),
       indicatorsContainer: styles => ({ ...styles, padding: '0 8px' }),
       dropdownIndicator: (styles, { selectProps }) => ({
          ...styles,
          alignItems: 'center',
-         backgroundColor: '#5254f1',
+         backgroundColor: '#0071f2',
          borderRadius: 11,
          color: '#ffffff',
          display: 'flex',
@@ -186,32 +187,31 @@ class ToolBar extends ReactBigCalendarToolbar {
    render() {
       const { navigate } = this;
       const { view, label, onView } = this.props;
-      console.log(this.props);
       const options = [
          {
             value: 'month',
-            label: 'Month',
+            label: 'Oy',
          },
          {
             value: 'week',
-            label: 'Week',
+            label: 'Hafta',
          },
          {
             value: 'work_week',
-            label: 'Work week',
+            label: 'Ish haftasi',
          },
          {
             value: 'day',
-            label: 'Day',
+            label: 'Kun',
          },
          {
             value: 'agenda',
-            label: 'Agenda',
+            label: 'Kun tartibi',
          },
       ];
       const value = options.find(option => option?.value === view);
       return (
-         <StyledElement>
+         <StyledToolBar>
             <div className='navigation'>
                <button
                   className='icon-button'
@@ -236,7 +236,7 @@ class ToolBar extends ReactBigCalendarToolbar {
                   }}
                   type='button'
                >
-                  Today
+                  Bugun
                </button>
                <button
                   className='icon-button'
@@ -258,14 +258,23 @@ class ToolBar extends ReactBigCalendarToolbar {
             <div className='label'>{label}</div>
             <div className='view'>
                <Select
-                  {...defaultOptions}
+                  {...selectConfig}
                   onChange={e => onView(e?.value)}
                   options={options}
                   value={value}
                />
             </div>
-         </StyledElement>
+         </StyledToolBar>
       );
    }
 }
+ToolBar.defaultProps = {
+   label: '',
+   view: 'month',
+};
+ToolBar.propTypes = {
+   label: string,
+   onView: func.isRequired,
+   view: string,
+};
 export default ToolBar;
