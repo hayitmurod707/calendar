@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/calendar/static/css/main.be83d15c.css",
+    "main.js": "/calendar/static/js/main.48bf8fc0.js",
+    "static/media/Gilroy-Medium.woff2": "/calendar/static/media/Gilroy-Medium.e2130cf5bbb93f1cc9e0.woff2",
+    "index.html": "/calendar/index.html",
+    "main.be83d15c.css.map": "/calendar/static/css/main.be83d15c.css.map",
+    "main.48bf8fc0.js.map": "/calendar/static/js/main.48bf8fc0.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.be83d15c.css",
+    "static/js/main.48bf8fc0.js"
+  ]
+}
