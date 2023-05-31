@@ -10,6 +10,7 @@ const StyledElement = styled.div`
    width: 100%;
    & .content {
       height: 600px;
+      max-height: 100%;
       max-width: 100%;
       width: 900px;
    }
@@ -39,7 +40,7 @@ const App = () => {
          status: 'error',
       },
       {
-         title: 'Meeting',
+         title: 'Meeting Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate natus vero eos temporibus iste perferendis hic quo id reprehenderit commodi, numquam sint molestiae placeat sequi? Dicta tempore quo sunt qui.',
          start: new Date(2023, 4, 30, 7, 0, 0),
          end: new Date(2023, 4, 30, 8, 0, 0),
          allDay: false,
@@ -61,6 +62,69 @@ const App = () => {
          start: new Date(2023, 4, 30, 13, 0, 0),
          end: new Date(2023, 4, 30, 14, 0, 0),
          allDay: false,
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 8, 0, 0),
+         end: new Date(2023, 4, 31, 11, 0, 0),
+         allDay: false,
+         status: 'warning',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 9, 0, 0),
+         end: new Date(2023, 4, 31, 10, 0, 0),
+         allDay: false,
+         status: 'success',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 10, 0, 0),
+         end: new Date(2023, 4, 31, 12, 0, 0),
+         allDay: false,
+         status: 'error',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 8, 0, 0),
+         end: new Date(2023, 4, 31, 11, 0, 0),
+         allDay: false,
+         status: 'warning',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 9, 0, 0),
+         end: new Date(2023, 4, 31, 10, 0, 0),
+         allDay: false,
+         status: 'success',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 10, 0, 0),
+         end: new Date(2023, 4, 31, 12, 0, 0),
+         allDay: false,
+         status: 'error',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 8, 0, 0),
+         end: new Date(2023, 4, 31, 11, 0, 0),
+         allDay: false,
+         status: 'warning',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 9, 0, 0),
+         end: new Date(2023, 4, 31, 10, 0, 0),
+         allDay: false,
+         status: 'success',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(2023, 4, 31, 10, 0, 0),
+         end: new Date(2023, 4, 31, 12, 0, 0),
+         allDay: false,
+         status: 'error',
       },
    ];
    return (

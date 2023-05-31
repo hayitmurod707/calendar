@@ -213,7 +213,6 @@ const StyledCalendar = styled.div`
          border-top: 1px solid #e2e4ea;
          margin: 0 0 -1px 0;
          &::-webkit-scrollbar {
-            padding: 0 5px 0 0;
             width: 6px;
          }
          &::-webkit-scrollbar-track {
@@ -232,6 +231,9 @@ const StyledCalendar = styled.div`
             }
             & .rbc-events-container {
                border-left: 1px solid #e2e4ea;
+            }
+            & .rbc-current-time-indicator {
+               background-color: #0071f2;
             }
          }
          & .rbc-time-gutter {
@@ -255,6 +257,59 @@ const StyledCalendar = styled.div`
                }
             }
          }
+      }
+   }
+   & .rbc-agenda-view {
+      & .rbc-agenda-empty {
+         align-items: center;
+         border-top: 1px solid #e2e4ea;
+         display: flex;
+         font-size: 18px;
+         height: 100%;
+         justify-content: center;
+         width: 100%;
+      }
+      & .rbc-agenda-content {
+         border-top: 1px solid #e2e4ea;
+         overflow-y: auto;
+         &::-webkit-scrollbar {
+            width: 6px;
+         }
+         &::-webkit-scrollbar-track {
+            background-color: transparent;
+         }
+         &::-webkit-scrollbar-thumb {
+            background-color: #0071f2;
+            border-radius: 3px;
+         }
+      }
+      & .rbc-agenda-table {
+         border: none;
+         & thead {
+            border-top: 1px solid #e2e4ea;
+            & th {
+               border-bottom: none;
+               padding: 8px 12px;
+            }
+            & th + th {
+               border-left: 1px solid #e2e4ea;
+            }
+         }
+         & tbody {
+            border-bottom: 1px solid #e2e4ea;
+            & .rbc-agenda-date-cell,
+            & .rbc-agenda-time-cell,
+            & .rbc-agenda-event-cell {
+               border-right: 1px solid #e2e4ea;
+               padding: 8px 12px;
+            }
+            & .rbc-agenda-event-cell {
+               border-right: none;
+            }
+         }
+      }
+      & .rbc-header-overflowing {
+         border-top: 1px solid #e2e4ea;
       }
    }
 `;
