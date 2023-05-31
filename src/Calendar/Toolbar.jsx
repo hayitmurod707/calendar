@@ -18,7 +18,7 @@ export const StyledMenu = styled.div`
       background-color: #ffffff;
       border-radius: 12px;
       border: none;
-      box-shadow: 0 0 7px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
       margin: 0;
       min-width: 100%;
       overflow: hidden;
@@ -32,7 +32,7 @@ export const StyledToolBar = styled.div`
    align-items: center;
    display: flex;
    justify-content: space-between;
-   padding: 6px;
+   padding: 7px;
    position: relative;
    z-index: 99;
    & .navigation {
@@ -64,7 +64,7 @@ export const StyledToolBar = styled.div`
          width: 38px;
       }
       & .today-button {
-         margin: 0 6px;
+         margin: 0 7px;
          padding: 0 20px;
       }
    }

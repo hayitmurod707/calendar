@@ -16,113 +16,28 @@ const StyledElement = styled.div`
    }
 `;
 const App = () => {
-   const [date, setDate] = useState(new Date());
+   const currentDate = new Date().getTime();
+   const [date, setDate] = useState(new Date(currentDate));
+   const hour = 1000 * 60 * 60;
    const events = [
       {
          title: 'Meeting',
-         start: new Date(2023, 4, 30, 8, 0, 0),
-         end: new Date(2023, 4, 30, 11, 0, 0),
+         start: new Date(currentDate + hour * 3),
+         end: new Date(currentDate + hour * 5),
          allDay: false,
          status: 'warning',
       },
       {
          title: 'Meeting',
-         start: new Date(2023, 4, 30, 9, 0, 0),
-         end: new Date(2023, 4, 30, 10, 0, 0),
+         start: new Date(currentDate + hour * 24),
+         end: new Date(currentDate + hour * 26),
          allDay: false,
          status: 'success',
       },
       {
          title: 'Meeting',
-         start: new Date(2023, 4, 30, 10, 0, 0),
-         end: new Date(2023, 4, 30, 12, 0, 0),
-         allDay: false,
-         status: 'error',
-      },
-      {
-         title: 'Meeting Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate natus vero eos temporibus iste perferendis hic quo id reprehenderit commodi, numquam sint molestiae placeat sequi? Dicta tempore quo sunt qui.',
-         start: new Date(2023, 4, 30, 7, 0, 0),
-         end: new Date(2023, 4, 30, 8, 0, 0),
-         allDay: false,
-      },
-      {
-         title: 'New meeting nfoerfer',
-         start: new Date(2023, 4, 30, 10, 0, 0),
-         end: new Date(2023, 4, 30, 11, 0, 0),
-         allDay: false,
-      },
-      {
-         title: 'New meeting nfoerfer',
-         start: new Date(2023, 4, 30, 12, 0, 0),
-         end: new Date(2023, 4, 30, 13, 0, 0),
-         allDay: false,
-      },
-      {
-         title: 'New meeting nfoerfer',
-         start: new Date(2023, 4, 30, 13, 0, 0),
-         end: new Date(2023, 4, 30, 14, 0, 0),
-         allDay: false,
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 8, 0, 0),
-         end: new Date(2023, 4, 31, 11, 0, 0),
-         allDay: false,
-         status: 'warning',
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 9, 0, 0),
-         end: new Date(2023, 4, 31, 10, 0, 0),
-         allDay: false,
-         status: 'success',
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 10, 0, 0),
-         end: new Date(2023, 4, 31, 12, 0, 0),
-         allDay: false,
-         status: 'error',
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 8, 0, 0),
-         end: new Date(2023, 4, 31, 11, 0, 0),
-         allDay: false,
-         status: 'warning',
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 9, 0, 0),
-         end: new Date(2023, 4, 31, 10, 0, 0),
-         allDay: false,
-         status: 'success',
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 10, 0, 0),
-         end: new Date(2023, 4, 31, 12, 0, 0),
-         allDay: false,
-         status: 'error',
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 8, 0, 0),
-         end: new Date(2023, 4, 31, 11, 0, 0),
-         allDay: false,
-         status: 'warning',
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 9, 0, 0),
-         end: new Date(2023, 4, 31, 10, 0, 0),
-         allDay: false,
-         status: 'success',
-      },
-      {
-         title: 'Meeting',
-         start: new Date(2023, 4, 31, 10, 0, 0),
-         end: new Date(2023, 4, 31, 12, 0, 0),
+         start: new Date(currentDate - hour * 27),
+         end: new Date(currentDate - hour * 24),
          allDay: false,
          status: 'error',
       },

@@ -1,12 +1,12 @@
 import moment from 'moment';
 import { any, array, func } from 'prop-types';
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import {
    Calendar as ReactBigCalendar,
    momentLocalizer,
 } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Toolbar from './Toolbar';
 moment.locale('uz', {
    months: [
@@ -39,13 +39,13 @@ moment.locale('uz', {
    ],
    monthsParseExact: true,
    weekdays: [
+      'Yakshanba',
       'Dushanba',
       'Seshanba',
       'Chorshanba',
       'Payshanba',
       'Juma',
       'Shanba',
-      'Yakshanba',
    ],
    weekdaysShort: ['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'],
    weekdaysMin: ['Ya', 'Du', 'Se', 'Ch', 'Pa', 'Ju', 'Sh'],
@@ -81,17 +81,11 @@ moment.locale('uz', {
       y: 'un an',
       yy: '%d ans',
    },
-   dayOfMonthOrdinalParse: /\d{1,2}(er|e)/,
-   ordinal: function (number) {
-      return number + (number === 1 ? 'er' : 'e');
-   },
-   meridiemParse: /PD|MD/,
-   isPM: input => {
-      return input.charAt(0) === 'M';
-   },
-   meridiem: (hours, minutes, isLower) => {
-      return hours < 12 ? 'PD' : 'MD';
-   },
+   dayOfMonthOrdinalParse: /\d{1,2}(-)/,
+   ordinal: number => number + '-',
+   meridiemParse: /PM|AM/,
+   isPM: input => input.charAt(0) === 'M',
+   meridiem: hours => (hours < 12 ? 'AM' : 'PM'),
    week: {
       dow: 1,
       doy: 4,
@@ -101,6 +95,14 @@ const localizer = momentLocalizer(moment);
 const calendarConfig = {
    endAccessor: 'end',
    localizer,
+   startAccessor: 'start',
+   tooltipAccessor: null,
+   views: ['month', 'week', 'work_week', 'day', 'agenda'],
+   popup: true,
+   popupOffset: { x: 3, y: 3 },
+   style: {
+      width: '100%',
+   },
    messages: {
       agenda: 'Kun tartibi',
       allDay: 'Kun davomida',
@@ -119,13 +121,29 @@ const calendarConfig = {
       work_week: 'Ish haftasi',
       yesterday: 'Kecha',
    },
-   startAccessor: 'start',
-   style: {
-      width: '100%',
-   },
-   views: ['month', 'week', 'work_week', 'day', 'agenda'],
 };
-const StyledCalendar = styled.div`
+const Styles = createGlobalStyle`
+   & .rbc-overlay {
+      border-radius: 12px !important;
+      border: none !important;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 250px;
+      padding: 8px !important;
+      & .rbc-overlay-header {
+         border-bottom: 1px solid #e2e4ea;
+         padding: 8px 10px 5px 10px !important;
+      }
+      & > * + * {
+         margin: 7px 0 0 0;
+      }
+      & .rbc-event-content {
+         overflow: hidden;
+         text-overflow: ellipsis;
+         white-space: nowrap;
+      }
+   }
+`;
+const StyledCalendar = styled(ReactBigCalendar)`
    border-radius: 14px;
    border: 1px solid #e2e4ea;
    height: 100%;
@@ -313,7 +331,7 @@ const StyledCalendar = styled.div`
       }
    }
 `;
-const StyledEventWrapper = styled.div`
+const StyledEvent = styled.div`
    &[data-status='success'] {
       & .rbc-event {
          background-color: #64bc26;
@@ -352,7 +370,7 @@ const StyledEventWrapper = styled.div`
       }
    }
 `;
-const StyledMonthDateHeader = styled.button`
+const StyledDay = styled.button`
    background-color: rgba(82, 85, 241, 0.1);
    border-radius: 12px;
    border: none;
@@ -363,27 +381,44 @@ const StyledMonthDateHeader = styled.button`
    outline: none;
    padding: 4px 7px;
 `;
-const EventWrapper = ({ children, event }) => (
-   <StyledEventWrapper data-status={event?.status}>
-      {children}
-   </StyledEventWrapper>
+const Event = ({ children, event }) => (
+   <StyledEvent data-status={event?.status}>{children}</StyledEvent>
 );
-const MonthDateHeader = ({ isOffRange, label }) =>
-   isOffRange ? null : (
-      <StyledMonthDateHeader>
-         {String(label).startsWith('0') ? label.slice(1) : label}
-      </StyledMonthDateHeader>
-   );
+const Day = ({ label }) => <StyledDay>{label}</StyledDay>;
 const Calendar = ({ events, date, onNavigate }) => {
    const [view, setView] = useState('month');
    const [event, setEvent] = useState(null);
-   const components = useMemo(
+   const memoizedConfig = useMemo(
       () => ({
-         toolbar: Toolbar,
-         month: {
-            dateHeader: MonthDateHeader,
+         components: {
+            toolbar: Toolbar,
+            month: {
+               dateHeader: Day,
+            },
+            eventWrapper: Event,
          },
-         eventWrapper: EventWrapper,
+         formats: {
+            dateFormat: (date, culture, localizer) => {
+               return localizer.format(date, 'D', culture);
+            },
+            dayFormat: (date, culture, localizer) => {
+               return localizer.format(date, 'ddd', culture);
+            },
+            dayHeaderFormat: (date, culture, localizer) => {
+               return localizer.format(date, 'dddd DoMMMM YYYY', culture);
+            },
+            dayRangeHeaderFormat: ({ start }, culture, localizer) => {
+               const week = localizer.format(start, 'w', culture);
+               const year = localizer.format(start, 'YYYY', culture);
+               return week + '-hafta ' + year;
+            },
+            agendaHeaderFormat: ({ start }, culture, localizer) => {
+               return localizer.format(start, 'MMMM YYYY', culture);
+            },
+            agendaDateFormat: (date, culture, localizer) => {
+               return localizer.format(date, 'DoMMMM', culture);
+            },
+         },
       }),
       []
    );
@@ -392,9 +427,7 @@ const Calendar = ({ events, date, onNavigate }) => {
       setView(view);
       onNavigate(date);
    };
-   useEffect(() => {
-      console.log(event);
-   }, [event]);
+   console.log(event);
    useEffect(() => {
       const listener = e => {
          if (e.target.tagName === 'BODY') {
@@ -422,10 +455,10 @@ const Calendar = ({ events, date, onNavigate }) => {
       };
    }, []);
    return (
-      <StyledCalendar>
-         <ReactBigCalendar
+      <Fragment>
+         <StyledCalendar
             {...calendarConfig}
-            components={components}
+            {...memoizedConfig}
             date={defaultDate}
             events={events}
             onDrillDown={onDrillDown}
@@ -434,7 +467,8 @@ const Calendar = ({ events, date, onNavigate }) => {
             onView={setView}
             view={view}
          />
-      </StyledCalendar>
+         <Styles />
+      </Fragment>
    );
 };
 Calendar.defaultProps = {
