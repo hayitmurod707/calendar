@@ -4,5 +4,5 @@
    "editor.tabSize": 3,
    "reactSnippets.settings.importReactOnTop": false,
    "reactSnippets.settings.prettierEnabled": true,
-   "cSpell.words": ["Drilldown", "timeslot"]
+   "cSpell.words": ["contexify", "Drilldown", "reactjs", "timeslot"]
 }

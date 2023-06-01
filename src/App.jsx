@@ -41,6 +41,27 @@ const App = () => {
          allDay: false,
          status: 'error',
       },
+      {
+         title: 'Meeting',
+         start: new Date(currentDate - hour * 27),
+         end: new Date(currentDate - hour * 24),
+         allDay: false,
+         status: 'error',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(currentDate - hour * 27),
+         end: new Date(currentDate - hour * 24),
+         allDay: false,
+         status: 'error',
+      },
+      {
+         title: 'Meeting',
+         start: new Date(currentDate - hour * 27),
+         end: new Date(currentDate - hour * 24),
+         allDay: false,
+         status: 'error',
+      },
    ];
    return (
       <StyledElement>
@@ -49,7 +70,27 @@ const App = () => {
             <a href='https://github.com/hayitmurod707/calendar'>Github</a>
          </h4>
          <div className='content'>
-            <Calendar date={date} onNavigate={setDate} events={events} />
+            <Calendar
+               date={date}
+               onNavigate={setDate}
+               events={events}
+               CreateEventComponent={event => {
+                  console.log(event);
+                  return (
+                     <div>
+                        <p>{event.title}</p>
+                     </div>
+                  );
+               }}
+               EventComponent={event => {
+                  console.log(event);
+                  return (
+                     <div>
+                        <p>{event.title}</p>
+                     </div>
+                  );
+               }}
+            />
          </div>
       </StyledElement>
    );

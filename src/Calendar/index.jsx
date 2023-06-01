@@ -1,11 +1,12 @@
 import moment from 'moment';
-import { any, array, func } from 'prop-types';
+import { any, array, bool, func } from 'prop-types';
 import { Fragment, useEffect, useMemo, useState } from 'react';
 import {
    Calendar as ReactBigCalendar,
    momentLocalizer,
 } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
+import 'react-contexify/ReactContexify.css';
 import styled, { createGlobalStyle } from 'styled-components';
 import Toolbar from './Toolbar';
 moment.locale('uz', {
@@ -92,17 +93,22 @@ moment.locale('uz', {
    },
 });
 const localizer = momentLocalizer(moment);
-const calendarConfig = {
+const options = {
    endAccessor: 'end',
    localizer,
    startAccessor: 'start',
    tooltipAccessor: null,
    views: ['month', 'week', 'work_week', 'day', 'agenda'],
-   popup: true,
-   popupOffset: { x: 3, y: 3 },
    style: {
       width: '100%',
    },
+   dayPropGetter: (/* date */) => ({
+      style: {
+         // backgroundColor: 'rgba(82, 85, 241, 0.1)',
+         cursor: 'pointer',
+      },
+      // className: '',
+   }),
    messages: {
       agenda: 'Kun tartibi',
       allDay: 'Kun davomida',
@@ -148,6 +154,7 @@ const StyledCalendar = styled(ReactBigCalendar)`
    border: 1px solid #e2e4ea;
    height: 100%;
    overflow: hidden;
+   position: relative;
    width: 100%;
    & .rbc-today {
       background-color: rgba(82, 85, 241, 0.1);
@@ -331,7 +338,7 @@ const StyledCalendar = styled(ReactBigCalendar)`
       }
    }
 `;
-const StyledEvent = styled.div`
+const StyledEventWrapper = styled.div`
    &[data-status='success'] {
       & .rbc-event {
          background-color: #64bc26;
@@ -381,21 +388,31 @@ const StyledDay = styled.button`
    outline: none;
    padding: 4px 7px;
 `;
-const Event = ({ children, event }) => (
-   <StyledEvent data-status={event?.status}>{children}</StyledEvent>
+const EventWrapper = ({ children, event }) => (
+   <StyledEventWrapper data-status={event?.status}>
+      {children}
+   </StyledEventWrapper>
 );
 const Day = ({ label }) => <StyledDay>{label}</StyledDay>;
-const Calendar = ({ events, date, onNavigate }) => {
+const Calendar = ({
+   date,
+   events,
+   loading,
+   onNavigate,
+   EventComponent,
+   CreateEventComponent,
+}) => {
    const [view, setView] = useState('month');
+   const memoizedDate = useMemo(() => date, [date]);
    const [event, setEvent] = useState(null);
-   const memoizedConfig = useMemo(
+   const memoizedOptions = useMemo(
       () => ({
          components: {
             toolbar: Toolbar,
             month: {
                dateHeader: Day,
             },
-            eventWrapper: Event,
+            eventWrapper: EventWrapper,
          },
          formats: {
             dateFormat: (date, culture, localizer) => {
@@ -422,12 +439,13 @@ const Calendar = ({ events, date, onNavigate }) => {
       }),
       []
    );
-   const defaultDate = useMemo(() => date, [date]);
-   const onDrillDown = (date, view) => {
-      setView(view);
-      onNavigate(date);
+   const onSelectEvent = (event, nativeEvent) => {
+      setEvent({ event, nativeEvent });
    };
    console.log(event);
+   const onSelectSlot = (e, e1) => {
+      console.log(e, e1);
+   };
    useEffect(() => {
       const listener = e => {
          if (e.target.tagName === 'BODY') {
@@ -457,14 +475,15 @@ const Calendar = ({ events, date, onNavigate }) => {
    return (
       <Fragment>
          <StyledCalendar
-            {...calendarConfig}
-            {...memoizedConfig}
-            date={defaultDate}
+            {...options}
+            {...memoizedOptions}
+            date={memoizedDate}
             events={events}
-            onDrillDown={onDrillDown}
             onNavigate={onNavigate}
-            onSelectEvent={setEvent}
+            onSelectEvent={onSelectEvent}
+            onSelectSlot={onSelectSlot}
             onView={setView}
+            selectable
             view={view}
          />
          <Styles />
@@ -472,12 +491,18 @@ const Calendar = ({ events, date, onNavigate }) => {
    );
 };
 Calendar.defaultProps = {
+   CreateEventComponent: () => null,
+   EventComponent: () => null,
    date: new Date(),
    events: [],
+   loading: false,
 };
 Calendar.propTypes = {
+   CreateEventComponent: func,
+   EventComponent: func,
    date: any,
    events: array,
+   loading: bool,
    onNavigate: func,
 };
 export default Calendar;
