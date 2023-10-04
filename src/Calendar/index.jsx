@@ -151,18 +151,21 @@ const Styles = createGlobalStyle`
 `;
 const StyledCalendar = styled(ReactBigCalendar)`
    border-radius: 14px;
-   border: 1px solid #e2e4ea;
+   /* border: 1px solid #e2e4ea; */
    height: 100%;
    overflow: hidden;
    position: relative;
    width: 100%;
+   padding: 7px;
+   box-shadow: 0 1px 15px 0 rgba(13, 46, 105, 0.05),
+      0 1px 15px 0 rgba(13, 46, 105, 0.05);
    & .rbc-today {
       background-color: rgba(82, 85, 241, 0.1);
    }
    & .rbc-month-view {
-      border-color: #e2e4ea;
-      border-style: solid;
-      border-width: 1px 0 0 0;
+      border: 1px solid #e2e4ea;
+      border-radius: 12px;
+      overflow: hidden;
       & .rbc-month-header {
          & .rbc-header {
             border-bottom: 1px solid #e2e4ea;
@@ -200,8 +203,9 @@ const StyledCalendar = styled(ReactBigCalendar)`
       }
    }
    & .rbc-time-view {
-      border: none;
-      border-top: 1px solid #e2e4ea;
+      border: 1px solid #e2e4ea;
+      border-radius: 12px;
+      overflow: hidden;
       & .rbc-time-header {
          border-left: none;
          & .rbc-time-header-content {
@@ -285,6 +289,9 @@ const StyledCalendar = styled(ReactBigCalendar)`
       }
    }
    & .rbc-agenda-view {
+      border: 1px solid #e2e4ea;
+      border-radius: 12px;
+      overflow: hidden;
       & .rbc-agenda-empty {
          align-items: center;
          border-top: 1px solid #e2e4ea;
@@ -311,7 +318,6 @@ const StyledCalendar = styled(ReactBigCalendar)`
       & .rbc-agenda-table {
          border: none;
          & thead {
-            border-top: 1px solid #e2e4ea;
             & th {
                border-bottom: none;
                padding: 8px 12px;

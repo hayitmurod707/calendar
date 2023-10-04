@@ -18,7 +18,8 @@ export const StyledMenu = styled.div`
       background-color: #ffffff;
       border-radius: 12px;
       border: none;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 1px 20px 0 rgba(13, 46, 105, 0.07),
+         0 1px 20px 0 rgba(13, 46, 105, 0.07);
       margin: 0;
       min-width: 100%;
       overflow: hidden;
@@ -32,7 +33,7 @@ export const StyledToolBar = styled.div`
    align-items: center;
    display: flex;
    justify-content: space-between;
-   padding: 7px;
+   padding: 0 0 7px 0;
    position: relative;
    z-index: 99;
    & .navigation {
