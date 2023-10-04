@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/calendar/static/css/main.be83d15c.css",
-    "main.js": "/calendar/static/js/main.c66df259.js",
+    "main.css": "/calendar/static/css/main.a057e501.css",
+    "main.js": "/calendar/static/js/main.60ccd9c8.js",
     "static/media/Gilroy-Medium.woff2": "/calendar/static/media/Gilroy-Medium.e2130cf5bbb93f1cc9e0.woff2",
     "index.html": "/calendar/index.html",
-    "main.be83d15c.css.map": "/calendar/static/css/main.be83d15c.css.map",
-    "main.c66df259.js.map": "/calendar/static/js/main.c66df259.js.map"
+    "main.a057e501.css.map": "/calendar/static/css/main.a057e501.css.map",
+    "main.60ccd9c8.js.map": "/calendar/static/js/main.60ccd9c8.js.map"
   },
   "entrypoints": [
-    "static/css/main.be83d15c.css",
-    "static/js/main.c66df259.js"
+    "static/css/main.a057e501.css",
+    "static/js/main.60ccd9c8.js"
   ]
 }
