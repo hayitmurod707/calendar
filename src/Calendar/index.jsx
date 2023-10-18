@@ -1,14 +1,26 @@
 import moment from 'moment';
 import { any, array, bool, func } from 'prop-types';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import {
    Calendar as ReactBigCalendar,
    momentLocalizer,
 } from 'react-big-calendar';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import 'react-contexify/ReactContexify.css';
-import styled, { createGlobalStyle } from 'styled-components';
+import Popup from 'reactjs-popup';
+import styled, { createGlobalStyle, keyframes } from 'styled-components';
 import Toolbar from './Toolbar';
+const animation = keyframes`
+   0% {
+      transform: scale(103%);
+      opacity: 0.1;
+   }
+   100% {
+      transform: scale(100%);
+      opacity: 1;
+   }
+`;
+
 moment.locale('uz', {
    months: [
       'Yanvar',
@@ -102,12 +114,10 @@ const options = {
    style: {
       width: '100%',
    },
-   dayPropGetter: (/* date */) => ({
+   dayPropGetter: () => ({
       style: {
-         // backgroundColor: 'rgba(82, 85, 241, 0.1)',
          cursor: 'pointer',
       },
-      // className: '',
    }),
    messages: {
       agenda: 'Kun tartibi',
@@ -151,7 +161,6 @@ const Styles = createGlobalStyle`
 `;
 const StyledCalendar = styled(ReactBigCalendar)`
    border-radius: 14px;
-   /* border: 1px solid #e2e4ea; */
    height: 100%;
    overflow: hidden;
    position: relative;
@@ -394,10 +403,28 @@ const StyledDay = styled.button`
    outline: none;
    padding: 4px 7px;
 `;
+const StyledEventView = styled.div`
+   animation: ${animation} 0.3s cubic-bezier(0.38, 0.1, 0.36, 0.9);
+   background-color: white;
+   box-shadow: 0 1px 15px 0 rgba(13, 46, 105, 0.05),
+      0 1px 15px 0 rgba(13, 46, 105, 0.05);
+   border-radius: 16px;
+   height: 300px;
+   padding: 16px;
+`;
 const EventWrapper = ({ children, event }) => (
-   <StyledEventWrapper data-status={event?.status}>
-      {children}
-   </StyledEventWrapper>
+   <Popup
+      trigger={
+         <StyledEventWrapper data-status={event?.status}>
+            {children}
+         </StyledEventWrapper>
+      }
+      arrow={false}
+      lockScroll={true}
+      position='center center'
+   >
+      <StyledEventView>Popup content here !!</StyledEventView>
+   </Popup>
 );
 const Day = ({ label }) => <StyledDay>{label}</StyledDay>;
 const Calendar = ({
@@ -408,6 +435,7 @@ const Calendar = ({
    EventComponent,
    CreateEventComponent,
 }) => {
+   const ref = useRef(null);
    const [view, setView] = useState('month');
    const memoizedDate = useMemo(() => date, [date]);
    const [event, setEvent] = useState(null);
@@ -453,6 +481,7 @@ const Calendar = ({
       console.log(e, e1);
    };
    useEffect(() => {
+      console.log(ref);
       const listener = e => {
          if (e.target.tagName === 'BODY') {
             switch (e.code) {
@@ -481,16 +510,17 @@ const Calendar = ({
    return (
       <Fragment>
          <StyledCalendar
-            {...options}
-            {...memoizedOptions}
             date={memoizedDate}
             events={events}
             onNavigate={onNavigate}
             onSelectEvent={onSelectEvent}
             onSelectSlot={onSelectSlot}
             onView={setView}
+            ref={ref}
             selectable
             view={view}
+            {...memoizedOptions}
+            {...options}
          />
          <Styles />
       </Fragment>
